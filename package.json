@@ -4,5 +4,8 @@
   "main": "index.js",
   "repository": "git@github.com:almostxyz/use-contracts.git",
   "author": "Ruslan <almostz@yandex.ru>",
-  "license": "GNU GPLv3"
+  "license": "GNU GPLv3",
+  "dependencies": {
+    "react": "^18.2.0"
+  }
 }
