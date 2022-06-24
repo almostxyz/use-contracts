@@ -2,6 +2,7 @@
   "name": "use-contracts",
   "version": "1.0.0",
   "main": "index.js",
+  "types": "index.d.ts",
   "repository": "git@github.com:almostxyz/use-contracts.git",
   "author": "Ruslan <almostz@yandex.ru>",
   "license": "GNU GPLv3",
