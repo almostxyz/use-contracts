@@ -40,3 +40,5 @@ export const EthersProvider: React.FC<React.PropsWithChildren> = ({children}) =>
         </ContractsContext.Provider>
     </ProviderAndSignerContext.Provider>
 }
+
+export * from './hooks'
