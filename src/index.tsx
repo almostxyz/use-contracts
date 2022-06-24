@@ -3,19 +3,27 @@ import { ethers } from "ethers"
 
 type ProviderOrNull = ethers.providers.Provider | null
 type SignerOrNull  = ethers.Signer | null
-type ContractsMap = Map<string, ethers.Contract>
+type ContractsMap = Map<string, ethers.Contract> | null
 
 const ProviderAndSignerContext = React.createContext<{
     provider: ProviderOrNull,
     signer: SignerOrNull,
     setProvider: (provider: ProviderOrNull) => void
     setSigner: (signer: SignerOrNull) => void
-}>(null)
+}>({
+    provider: null,
+    signer: null,
+    setProvider: () => {},
+    setSigner: () => {}
+})
 
 const ContractsContext = React.createContext<{
-    contracts: Map<string, ethers.Contract>,
+    contracts: ContractsMap,
     setContracts: (contracts: ContractsMap) => void
-}>(null)
+}>({
+    contracts: null,
+    setContracts: () => {}
+})
 
 export const EthersProvider: React.FC<React.PropsWithChildren> = ({children}) => {
     const [signer, setSigner] = useState<SignerOrNull>(null)
