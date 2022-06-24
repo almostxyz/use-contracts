@@ -1,17 +1,22 @@
 {
   "name": "use-contracts",
   "version": "1.0.0",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": "git@github.com:almostxyz/use-contracts.git",
   "author": "Ruslan <almostz@yandex.ru>",
   "license": "GNU GPLv3",
+  "scripts": {
+    "build": "npx tsup src/index.tsx --watch --onSuccess \"npx tsc\""
+  },
   "dependencies": {
     "ethers": "^5.6.9",
     "react": "^18.2.0"
   },
   "devDependencies": {
+    "@types/node": "^18.0.0",
     "@types/react": "^18.0.14",
+    "tsup": "^6.1.2",
     "typescript": "^4.7.4"
   }
 }
