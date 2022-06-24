@@ -1,5 +1,5 @@
 {
-  "name": "use-contracts",
+  "name": "use-contracts-experimental",
   "version": "1.0.0-canary.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
