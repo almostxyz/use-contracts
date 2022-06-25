@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { BigNumber, BigNumberish, ethers, Signer, utils } from "ethers"
 
 import { SignerOrProvider, useContract } from "./useContract"
-import { IERC20 } from "../typechain/IERC20"
+import { IERC20 } from "../types/IERC20"
 import abi from "../abi/ERC20.json"
 
 type TransferWithAllowance = (spender: string, amount: BigNumberish) => Promise<void>
