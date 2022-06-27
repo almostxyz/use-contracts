@@ -8,7 +8,7 @@ import abi from "../abi/ERC20.json"
 type TransferWithAllowance = (spender: string, amount: BigNumberish) => Promise<void>
 
 export const useERC20 = (addressOrName: string, signerOrProvider?: SignerOrProvider) => {
-    const contract = useContract<IERC20 & {transferWithAllowance: TransferWithAllowance}>(addressOrName, abi, signerOrProvider)
+    const contract = useContract<IERC20 & {transferWithAllowance: TransferWithAllowance}>(addressOrName, abi)
     useEffect(() => {
         if (contract) {
             contract.transferWithAllowance = async function(to: string, amount: BigNumberish) {
