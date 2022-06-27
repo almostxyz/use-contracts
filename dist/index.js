@@ -25,28 +25,57 @@ var src_exports = {};
 __export(src_exports, {
   EthersProvider: () => EthersProvider,
   useContract: () => useContract,
-  useERC20: () => useERC20
+  useERC20: () => useERC20,
+  useProvider: () => useProvider,
+  useSigner: () => useSigner
 });
 module.exports = __toCommonJS(src_exports);
-var import_react3 = __toESM(require("react"));
+var import_react7 = __toESM(require("react"));
+
+// src/context/contractsContext.ts
+var import_react = __toESM(require("react"));
+var ContractsContext = import_react.default.createContext({
+  contracts: {},
+  addContract: () => {
+  },
+  clearContracts: () => {
+  }
+});
+
+// src/context/providerAndSignerContext.ts
+var import_react2 = __toESM(require("react"));
+var ProviderAndSignerContext = import_react2.default.createContext({
+  provider: null,
+  signer: null,
+  setProvider: () => {
+  },
+  setSigner: () => {
+  }
+});
 
 // src/hooks/useContract.ts
-var import_react = require("react");
+var import_react3 = require("react");
 var import_ethers = require("ethers");
-var useContract = (addressOrName, contractInterface, signerOrProvider) => {
-  const [contract, setContract] = (0, import_react.useState)(void 0);
-  (0, import_react.useEffect)(() => {
+var useContract = (addressOrName, contractInterface) => {
+  const { contracts, addContract } = (0, import_react3.useContext)(ContractsContext);
+  const { provider, signer } = (0, import_react3.useContext)(ProviderAndSignerContext);
+  const [contract, setContract] = (0, import_react3.useState)(contracts[addressOrName]);
+  (0, import_react3.useEffect)(() => {
     const exec = async () => {
-      const _contract = await new import_ethers.Contract(addressOrName, contractInterface, signerOrProvider).deployed();
+      if (contracts[addressOrName]) {
+        return;
+      }
+      const _contract = await new import_ethers.Contract(addressOrName, contractInterface, signer || provider || void 0).deployed();
+      addContract(_contract);
       setContract(_contract);
     };
     exec();
-  }, [addressOrName, contractInterface, signerOrProvider]);
+  }, [addressOrName, contractInterface, provider, signer]);
   return contract;
 };
 
 // src/hooks/useERC20.ts
-var import_react2 = require("react");
+var import_react4 = require("react");
 var import_ethers2 = require("ethers");
 
 // src/abi/ERC20.json
@@ -400,8 +429,8 @@ var ERC20_default = [
 
 // src/hooks/useERC20.ts
 var useERC20 = (addressOrName, signerOrProvider) => {
-  const contract = useContract(addressOrName, ERC20_default, signerOrProvider);
-  (0, import_react2.useEffect)(() => {
+  const contract = useContract(addressOrName, ERC20_default);
+  (0, import_react4.useEffect)(() => {
     if (contract) {
       contract.transferWithAllowance = async function(to, amount) {
         if (!(signerOrProvider instanceof import_ethers2.Signer)) {
@@ -429,38 +458,63 @@ var useERC20 = (addressOrName, signerOrProvider) => {
   return contract;
 };
 
+// src/hooks/useProvider.ts
+var import_react5 = require("react");
+var useProvider = (provider) => {
+  const ctx = (0, import_react5.useContext)(ProviderAndSignerContext);
+  const { contracts, clearContracts } = (0, import_react5.useContext)(ContractsContext);
+  (0, import_react5.useEffect)(() => {
+    if (!provider) {
+      clearContracts();
+    }
+    ctx.setProvider(provider);
+  }, [provider]);
+  return ctx;
+};
+
+// src/hooks/useSigner.ts
+var import_react6 = require("react");
+var useSigner = (signer) => {
+  const ctx = (0, import_react6.useContext)(ProviderAndSignerContext);
+  const { clearContracts } = (0, import_react6.useContext)(ContractsContext);
+  if (!signer) {
+    clearContracts();
+  }
+  ctx.setSigner(signer);
+  ctx.setProvider((signer == null ? void 0 : signer.provider) || null);
+  return ctx;
+};
+
 // src/index.tsx
-var ProviderAndSignerContext = import_react3.default.createContext({
-  provider: null,
-  signer: null,
-  setProvider: () => {
-  },
-  setSigner: () => {
-  }
-});
-var ContractsContext = import_react3.default.createContext({
-  contracts: null,
-  setContracts: () => {
-  }
-});
 var EthersProvider = ({ children }) => {
-  const [signer, setSigner] = (0, import_react3.useState)(null);
-  const [provider, setProvider] = (0, import_react3.useState)(null);
-  const [contracts, setContracts] = (0, import_react3.useState)(null);
-  return /* @__PURE__ */ import_react3.default.createElement(ProviderAndSignerContext.Provider, {
+  const [signer, setSigner] = (0, import_react7.useState)(null);
+  const [provider, setProvider] = (0, import_react7.useState)(null);
+  const [contracts, setContracts] = (0, import_react7.useState)({});
+  const addContract = (contract) => {
+    setContracts({
+      ...contracts,
+      [contract.address]: contract
+    });
+  };
+  const clearContracts = () => {
+    setContracts({});
+  };
+  return /* @__PURE__ */ import_react7.default.createElement(ProviderAndSignerContext.Provider, {
     value: {
       provider,
       setProvider,
       signer,
       setSigner
     }
-  }, /* @__PURE__ */ import_react3.default.createElement(ContractsContext.Provider, {
-    value: { contracts, setContracts }
+  }, /* @__PURE__ */ import_react7.default.createElement(ContractsContext.Provider, {
+    value: { contracts, addContract, clearContracts }
   }, children));
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   EthersProvider,
   useContract,
-  useERC20
+  useERC20,
+  useProvider,
+  useSigner
 });

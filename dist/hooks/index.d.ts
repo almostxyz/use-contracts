@@ -1,2 +1,4 @@
-export { useContract } from './useContract';
-export { useERC20 } from './useERC20';
+export * from './useContract';
+export * from './useERC20';
+export * from './useProvider';
+export * from './useSigner';
