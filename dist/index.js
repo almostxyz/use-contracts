@@ -62,6 +62,9 @@ var useContract = (addressOrName, contractInterface) => {
   const [contract, setContract] = (0, import_react3.useState)(contracts[addressOrName]);
   (0, import_react3.useEffect)(() => {
     const exec = async () => {
+      if (!(provider && signer)) {
+        return;
+      }
       if (contracts[addressOrName]) {
         return;
       }

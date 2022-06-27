@@ -11,6 +11,9 @@ export const useContract = <T extends BaseContract = Contract>(addressOrName: st
 
     useEffect(() => {
         const exec = async () => {
+            if (!(provider && signer)) {
+                return
+            }
             if (contracts[addressOrName]) {
                 return
             }
