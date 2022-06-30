@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Contract, ethers } from "ethers"
 import { ContractsContext, ProviderAndSignerContext } from './context'
 import { ContractsMap, ProviderOrNull, SignerOrNull } from './types'
@@ -15,9 +15,12 @@ export const EthersProvider: React.FC<React.PropsWithChildren> = ({children}) =>
         })
     }
 
-    const clearContracts = () => {
+    const clearContracts = useCallback(() => {
+        if (Object.keys(contracts).length === 0) {
+            return
+        }
         setContracts({})
-    }
+    }, [])
 
     return <ProviderAndSignerContext.Provider value={{
         provider,

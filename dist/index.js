@@ -482,6 +482,7 @@ var useSigner = (signer) => {
   const { clearContracts } = (0, import_react6.useContext)(ContractsContext);
   if (!signer) {
     clearContracts();
+    return ctx;
   }
   ctx.setSigner(signer);
   ctx.setProvider((signer == null ? void 0 : signer.provider) || null);
@@ -499,9 +500,12 @@ var EthersProvider = ({ children }) => {
       [contract.address]: contract
     });
   };
-  const clearContracts = () => {
+  const clearContracts = (0, import_react7.useCallback)(() => {
+    if (Object.keys(contracts).length === 0) {
+      return;
+    }
     setContracts({});
-  };
+  }, []);
   return /* @__PURE__ */ import_react7.default.createElement(ProviderAndSignerContext.Provider, {
     value: {
       provider,
