@@ -1,7 +1,7 @@
-import { SignerOrNull } from "../types";
-export declare const useSigner: (signer: SignerOrNull) => {
+import { ethers } from "ethers";
+export declare const useSigner: (signer: ethers.Signer) => {
     provider: import("../types").ProviderOrNull;
-    signer: SignerOrNull;
+    signer: import("../types").SignerOrNull;
     setProvider: (provider: import("../types").ProviderOrNull) => void;
-    setSigner: (signer: SignerOrNull) => void;
+    setSigner: (signer: import("../types").SignerOrNull) => void;
 };

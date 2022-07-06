@@ -480,19 +480,28 @@ var import_react6 = require("react");
 var useSigner = (signer) => {
   const ctx = (0, import_react6.useContext)(ProviderAndSignerContext);
   const { clearContracts } = (0, import_react6.useContext)(ContractsContext);
-  if (!signer) {
-    clearContracts();
-    return ctx;
-  }
+  (0, import_react6.useEffect)(() => {
+    if (!signer) {
+      clearContracts();
+    }
+  }, []);
   ctx.setSigner(signer);
   ctx.setProvider((signer == null ? void 0 : signer.provider) || null);
   return ctx;
 };
 
 // src/index.tsx
-var EthersProvider = ({ children }) => {
-  const [signer, setSigner] = (0, import_react7.useState)(null);
+var useProviderOrSignerController = () => {
   const [provider, setProvider] = (0, import_react7.useState)(null);
+  const [signer, setSigner] = (0, import_react7.useState)(null);
+  return {
+    provider,
+    setProvider,
+    signer,
+    setSigner
+  };
+};
+var useContractsProvider = () => {
   const [contracts, setContracts] = (0, import_react7.useState)({});
   const addContract = (contract) => {
     setContracts({
@@ -506,15 +515,17 @@ var EthersProvider = ({ children }) => {
     }
     setContracts({});
   }, []);
+  return {
+    contracts,
+    addContract,
+    clearContracts
+  };
+};
+var EthersProvider = ({ children }) => {
   return /* @__PURE__ */ import_react7.default.createElement(ProviderAndSignerContext.Provider, {
-    value: {
-      provider,
-      setProvider,
-      signer,
-      setSigner
-    }
+    value: useProviderOrSignerController()
   }, /* @__PURE__ */ import_react7.default.createElement(ContractsContext.Provider, {
-    value: { contracts, addContract, clearContracts }
+    value: useContractsProvider()
   }, children));
 };
 // Annotate the CommonJS export names for ESM import in node:
