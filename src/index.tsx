@@ -1,11 +1,21 @@
 import React, { useCallback, useState } from 'react'
-import { Contract, ethers } from "ethers"
+import { Contract } from "ethers"
 import { ContractsContext, ProviderAndSignerContext } from './context'
 import { ContractsMap, ProviderOrNull, SignerOrNull } from './types'
 
-export const EthersProvider: React.FC<React.PropsWithChildren> = ({children}) => {
-    const [signer, setSigner] = useState<SignerOrNull>(null)
+const useProviderOrSignerController = () => {
     const [provider, setProvider] = useState<ProviderOrNull>(null)
+    const [signer, setSigner] = useState<SignerOrNull>(null)
+
+    return {
+        provider,
+        setProvider,
+        signer,
+        setSigner
+    }
+}
+
+const useContractsProvider = () => {
     const [contracts, setContracts] = useState<ContractsMap>({})
 
     const addContract = (contract: Contract) => {
@@ -22,13 +32,16 @@ export const EthersProvider: React.FC<React.PropsWithChildren> = ({children}) =>
         setContracts({})
     }, [])
 
-    return <ProviderAndSignerContext.Provider value={{
-        provider,
-        setProvider,
-        signer,
-        setSigner
-    }}>
-        <ContractsContext.Provider value={{contracts, addContract, clearContracts}}>
+    return {
+        contracts,
+        addContract,
+        clearContracts,
+    }
+}
+
+export const EthersProvider: React.FC<React.PropsWithChildren> = ({children}) => {
+    return <ProviderAndSignerContext.Provider value={useProviderOrSignerController()}>
+        <ContractsContext.Provider value={useContractsProvider()}>
             {children}
         </ContractsContext.Provider>
     </ProviderAndSignerContext.Provider>
