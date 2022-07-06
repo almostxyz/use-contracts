@@ -1,6 +1,6 @@
 {
   "name": "use-contracts",
-  "version": "0.0.1-canary.5",
+  "version": "0.0.1-canary.6",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "git@github.com:almostxyz/use-contracts.git",
