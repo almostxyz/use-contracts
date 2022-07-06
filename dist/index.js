@@ -469,6 +469,7 @@ var useProvider = (provider) => {
   (0, import_react5.useEffect)(() => {
     if (!provider) {
       clearContracts();
+      return;
     }
     ctx.setProvider(provider);
   }, [provider]);
@@ -483,10 +484,11 @@ var useSigner = (signer) => {
   (0, import_react6.useEffect)(() => {
     if (!signer) {
       clearContracts();
+      return;
     }
-  }, []);
-  ctx.setSigner(signer);
-  ctx.setProvider((signer == null ? void 0 : signer.provider) || null);
+    ctx.setSigner(signer);
+    ctx.setProvider((signer == null ? void 0 : signer.provider) || null);
+  }, [signer]);
   return ctx;
 };
 

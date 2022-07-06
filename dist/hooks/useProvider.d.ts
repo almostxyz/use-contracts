@@ -1,5 +1,5 @@
 import { ProviderOrNull } from "../types";
-export declare const useProvider: (provider: ProviderOrNull) => {
+export declare const useProvider: (provider?: ProviderOrNull) => {
     provider: ProviderOrNull;
     signer: import("../types").SignerOrNull;
     setProvider: (provider: ProviderOrNull) => void;
