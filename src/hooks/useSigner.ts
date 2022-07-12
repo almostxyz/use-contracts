@@ -13,5 +13,5 @@ export const useSigner = (_signer?: ethers.Signer) => {
         // signer exists but provider doesnt?
         setProvider(signer?.provider || null)
     }, [signer])
-    return signer
+    return [signer, setSigner]
 }

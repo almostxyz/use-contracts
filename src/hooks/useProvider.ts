@@ -11,5 +11,5 @@ export const useProvider = (_provider?: ProviderOrNull) => {
         }
         setProvider(_provider)
     }, [_provider])
-    return provider 
+    return [provider, setProvider]
 }

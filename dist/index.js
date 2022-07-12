@@ -466,7 +466,7 @@ var useProvider = (_provider) => {
     }
     setProvider(_provider);
   }, [_provider]);
-  return provider;
+  return [provider, setProvider];
 };
 
 // src/hooks/useSigner.ts
@@ -481,7 +481,7 @@ var useSigner = (_signer) => {
     setSigner(signer);
     setProvider((signer == null ? void 0 : signer.provider) || null);
   }, [signer]);
-  return signer;
+  return [signer, setSigner];
 };
 
 // src/index.tsx
