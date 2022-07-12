@@ -1,17 +1,15 @@
 import { useContext, useEffect } from "react";
-import { ContractsContext } from "../context";
-import { ProviderAndSignerContext } from "../context/providerAndSignerContext";
+import { EthersContext } from "../context";
 import { ProviderOrNull } from "../types";
 
-export const useProvider = (provider?: ProviderOrNull) => {
-    const ctx = useContext(ProviderAndSignerContext)
-    const {contracts, clearContracts} = useContext(ContractsContext)
+export const useProvider = (_provider?: ProviderOrNull) => {
+    const {clearContracts, setProvider, provider} = useContext(EthersContext)
     useEffect(() => {
-        if (!provider) {
+        if (!_provider) {
             clearContracts()
             return
         }
-        ctx.setProvider(provider)
-    }, [provider])
-    return ctx
+        setProvider(_provider)
+    }, [_provider])
+    return provider 
 }

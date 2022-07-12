@@ -1,21 +1,12 @@
 import React, { useCallback, useState } from 'react'
 import { Contract } from "ethers"
-import { ContractsContext, ProviderAndSignerContext } from './context'
+import { EthersContext } from './context'
 import { ContractsMap, ProviderOrNull, SignerOrNull } from './types'
 
-const useProviderOrSignerController = () => {
+const useEthersController = () => {
     const [provider, setProvider] = useState<ProviderOrNull>(null)
     const [signer, setSigner] = useState<SignerOrNull>(null)
-
-    return {
-        provider,
-        setProvider,
-        signer,
-        setSigner
-    }
-}
-
-const useContractsProvider = () => {
+    
     const [contracts, setContracts] = useState<ContractsMap>({})
 
     const addContract = (contract: Contract) => {
@@ -33,18 +24,21 @@ const useContractsProvider = () => {
     }, [])
 
     return {
+        provider,
+        signer,
         contracts,
+
+        setProvider,
+        setSigner,
         addContract,
         clearContracts,
     }
 }
 
 export const EthersProvider: React.FC<React.PropsWithChildren> = ({children}) => {
-    return <ProviderAndSignerContext.Provider value={useProviderOrSignerController()}>
-        <ContractsContext.Provider value={useContractsProvider()}>
-            {children}
-        </ContractsContext.Provider>
-    </ProviderAndSignerContext.Provider>
+    return <EthersContext.Provider value={useEthersController()}>
+        {children}
+    </EthersContext.Provider>
 }
 
 export * from './hooks'

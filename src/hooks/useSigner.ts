@@ -1,19 +1,17 @@
 import { ethers } from "ethers";
 import { useContext, useEffect } from "react";
-import { ContractsContext } from "../context";
-import { ProviderAndSignerContext } from "../context/providerAndSignerContext";
+import { EthersContext } from "../context";
 
-export const useSigner = (signer?: ethers.Signer) => {
-    const ctx = useContext(ProviderAndSignerContext)
-    const {clearContracts} = useContext(ContractsContext)
+export const useSigner = (_signer?: ethers.Signer) => {
+    const {clearContracts, setSigner, setProvider, signer} = useContext(EthersContext)
     useEffect(() => {
         if (!signer) {
             clearContracts()
             return
         }
-        ctx.setSigner(signer)
+        setSigner(signer)
         // signer exists but provider doesnt?
-        ctx.setProvider(signer?.provider || null)
+        setProvider(signer?.provider || null)
     }, [signer])
-    return ctx
+    return signer
 }

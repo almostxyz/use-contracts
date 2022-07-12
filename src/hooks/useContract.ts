@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from "react"
 import { BaseContract, Contract, ContractInterface, providers, Signer } from "ethers"
-import { ContractsContext, ProviderAndSignerContext } from "../context"
+import { EthersContext } from "../context"
 
 export type SignerOrProvider = Signer | providers.Provider
 
 export const useContract = <T extends BaseContract = Contract>(addressOrName: string, contractInterface: ContractInterface) => {
-    const {contracts, addContract} = useContext(ContractsContext)
-    const {provider, signer} = useContext(ProviderAndSignerContext)
+    const {contracts, addContract, provider, signer} = useContext(EthersContext)
     const [contract, setContract] = useState<T>(contracts[addressOrName] as T)
 
     useEffect(() => {
