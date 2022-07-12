@@ -2,13 +2,13 @@ import { useEffect } from "react"
 import { BigNumber, BigNumberish, ethers, Signer, utils } from "ethers"
 
 import { SignerOrProvider, useContract } from "./useContract"
-import { IERC20 } from "../types/IERC20"
 import abi from "../abi/ERC20.json"
+import { ERC20 } from "../types/ethers-contracts/ERC20"
 
 type TransferWithAllowance = (spender: string, amount: BigNumberish) => Promise<void>
 
 export const useERC20 = (addressOrName: string, signerOrProvider?: SignerOrProvider) => {
-    const contract = useContract<IERC20 & {transferWithAllowance: TransferWithAllowance}>(addressOrName, abi)
+    const contract = useContract<ERC20 & {transferWithAllowance: TransferWithAllowance}>(addressOrName, abi)
     useEffect(() => {
         if (contract) {
             contract.transferWithAllowance = async function(to: string, amount: BigNumberish) {
