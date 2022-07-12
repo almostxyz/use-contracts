@@ -7,7 +7,7 @@
   "author": "Ruslan <almostz@yandex.ru>",
   "license": "GNU GPLv3",
   "scripts": {
-    "build": "npx tsup src/index.tsx --watch --onSuccess \"npx tsc\""
+    "build": "npx tsup src/index.tsx --minify --treeshake --watch --onSuccess \"npx tsc\""
   },
   "dependencies": {
     "ethers": "^5.6.9",
