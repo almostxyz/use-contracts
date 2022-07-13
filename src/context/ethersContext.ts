@@ -6,11 +6,13 @@ export const EthersContext = React.createContext<{
     provider: Provider,
     signer: Signer,
     contracts: ContractsMap,
+    address?: string
 
     addContract: (contract: Contract) => void,
     clearContracts: () => void,
     setProvider: (provider: Provider) => void,
     setSigner: (signer: Signer) => void,
+    setAddress: (address?: string) => void
 }>({
     contracts: {},
     provider: undefined,
@@ -19,5 +21,6 @@ export const EthersContext = React.createContext<{
     addContract: () => {},
     clearContracts: () => {},
     setProvider: () => {},
-    setSigner: () => {}
+    setSigner: () => {},
+    setAddress: () => {}
 })

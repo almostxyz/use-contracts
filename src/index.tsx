@@ -6,6 +6,7 @@ import { ContractsMap, Provider, Signer } from './types'
 const useEthersController = () => {
     const [provider, setProvider] = useState<Provider>()
     const [signer, setSigner] = useState<Signer>()
+    const [address, setAddress] = useState<string>()
     
     const [contracts, setContracts] = useState<ContractsMap>({})
 
@@ -26,10 +27,12 @@ const useEthersController = () => {
     return {
         provider,
         signer,
+        address,
         contracts,
 
         setProvider,
         setSigner,
+        setAddress,
         addContract,
         clearContracts,
     }
