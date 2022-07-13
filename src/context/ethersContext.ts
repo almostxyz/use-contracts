@@ -1,20 +1,20 @@
 import { Contract } from "ethers"
 import React from "react"
-import { ContractsMap, ProviderOrNull, SignerOrNull } from "../types"
+import { ContractsMap, Provider, Signer } from "../types"
 
 export const EthersContext = React.createContext<{
-    provider: ProviderOrNull,
-    signer: SignerOrNull,
+    provider: Provider,
+    signer: Signer,
     contracts: ContractsMap,
 
     addContract: (contract: Contract) => void,
     clearContracts: () => void,
-    setProvider: (provider: ProviderOrNull) => void,
-    setSigner: (signer: SignerOrNull) => void,
+    setProvider: (provider: Provider) => void,
+    setSigner: (signer: Signer) => void,
 }>({
     contracts: {},
-    provider: null,
-    signer: null,
+    provider: undefined,
+    signer: undefined,
 
     addContract: () => {},
     clearContracts: () => {},

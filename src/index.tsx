@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from 'react'
 import { Contract } from "ethers"
 import { EthersContext } from './context'
-import { ContractsMap, ProviderOrNull, SignerOrNull } from './types'
+import { ContractsMap, Provider, Signer } from './types'
 
 const useEthersController = () => {
-    const [provider, setProvider] = useState<ProviderOrNull>(null)
-    const [signer, setSigner] = useState<SignerOrNull>(null)
+    const [provider, setProvider] = useState<Provider>()
+    const [signer, setSigner] = useState<Signer>()
     
     const [contracts, setContracts] = useState<ContractsMap>({})
 

@@ -1,6 +1,6 @@
 import ethers from 'ethers'
 
-export type ProviderOrNull = ethers.providers.Provider | null
-export type SignerOrNull  = ethers.Signer | null
+export type Provider = ethers.providers.Provider | undefined
+export type Signer  = ethers.Signer | undefined
 export type ContractsMap = Record<string, ethers.Contract>
 export * from './ethers-contracts'
