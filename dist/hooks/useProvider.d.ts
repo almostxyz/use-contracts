@@ -1,2 +1,2 @@
-import { ProviderOrNull } from "../types";
-export declare const useProvider: (_provider?: ProviderOrNull) => readonly [ProviderOrNull, (provider: ProviderOrNull) => void];
+import { Provider } from "../types";
+export declare const useProvider: (_provider?: Provider) => readonly [Provider, (provider: Provider) => void];
