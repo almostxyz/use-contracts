@@ -24,7 +24,5 @@ export const useSigner = (_signer?: ethers.Signer) => {
 }
 
 export const useAddress = () => {
-    const address = useContext(EthersContext).address
-    address.valueOf = () => address[0]
-    return 
+    return useContext(EthersContext).address
 }

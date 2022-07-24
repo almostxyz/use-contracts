@@ -1,3 +1,3 @@
 import { ethers } from "ethers";
 export declare const useSigner: (_signer?: ethers.Signer) => readonly [import("../types").Signer, (signer: import("../types").Signer) => void];
-export declare const useAddress: () => void;
+export declare const useAddress: () => [string, string];
