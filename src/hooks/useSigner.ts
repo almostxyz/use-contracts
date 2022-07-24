@@ -14,7 +14,9 @@ export const useSigner = (_signer?: ethers.Signer) => {
         setProvider(signer?.provider)
 
         const assignAddress = async () => {
-            setAddress(await signer.getAddress())
+            const address = await signer.getAddress() 
+            const ens = await signer.provider?.lookupAddress(address) || ''
+            setAddress([address, ens])
         }
         assignAddress()
     }, [signer])
@@ -22,5 +24,7 @@ export const useSigner = (_signer?: ethers.Signer) => {
 }
 
 export const useAddress = () => {
-    return useContext(EthersContext).address
+    const address = useContext(EthersContext).address
+    address.valueOf = () => address[0]
+    return 
 }
